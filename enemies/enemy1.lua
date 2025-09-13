@@ -25,8 +25,9 @@ function enemy:init(map)
             if data.enemy=="enemy1" then
                 enemy:new(x*8-2,y*8-1,data.dir)
                 lg.print("data dir: "..data.dir)
+                map:setLayerTile("enemy",x+1,y+1,0)
             end
-            map:setLayerTile("enemy",x+1,y+1,0)
+            
             
         end
     end

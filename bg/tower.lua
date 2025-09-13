@@ -16,7 +16,7 @@ function bg.init()
 end
 
 function bg.update(dt)
-    bg.lerpPos=lerpDt(bg.lerpPos,(camera.x*0.3),4,dt)
+    bg.lerpPos=lerpDt(bg.lerpPos,(camera.x*0.08),4,dt)
     bg.cam=lerpDt(bg.cam,camera.x*0.3,8,dt)
 end
 

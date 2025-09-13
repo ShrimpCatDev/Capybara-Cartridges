@@ -21,14 +21,19 @@ function filter(item, other)
 end
 
 function level:init()
+
+    --add the player code
     pl=require("player")
 
+    --init particles
     part=require("particles")
     part.assets={
         enemy1=lg.newImage("assets/enemy/dead1.png"),
         box=lg.newImage("assets/items/box.png"),
         leaf=lg.newImage("assets/items/leaf.png")
     }
+
+    --add shaders and send the right data to them
     shader=require("assets/shader")
     shader.wave:send("amp",0.01)
     shader.wave:send("freq",20)
@@ -39,7 +44,9 @@ function level:init()
     shader.water:send("spd",4)
     --shader.crt:send("barrel", 0.3)
 
-    shove.addGlobalEffect(shader.crt)
+    --shove.addGlobalEffect(shader.crt)
+
+    --add the effects
 
     shove.addEffect("game",shader.water)
     shove.addEffect("game",shader.wave)
@@ -60,7 +67,7 @@ function level:enter()
 
     world=bump.newWorld(16)
 
-    map=sti("assets/map/dev.lua",{"bump"})
+    map=sti("assets/map/levelSelect.lua",{"bump"})
     map:bump_init(world)
 
     items=require("items")
@@ -72,7 +79,19 @@ function level:enter()
 
     camera={x=0,y=0}
 
-    pl:init(16,82*4)
+    pl:init(0,0)
+
+    for x=0,map.width-1 do
+        for y=0,map.height-1 do
+            local data=map:getTileProperties("enemy",x+1,y+1)
+            if data.player then
+                pl.x,pl.y=x*8,y*8
+                map:setLayerTile("enemy",x+1,y+1,0)
+            end
+            
+            
+        end
+    end
 
     bgs.current=bgs[2]
     bgs.current.init()
