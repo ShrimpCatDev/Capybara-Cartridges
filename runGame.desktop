@@ -1,12 +1,13 @@
 [Desktop Entry]
-Name=LÖVE
-Comment=The unquestionably awesome 2D game engine
-MimeType=application/x-love-game;
-Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=/app/bin/love --file-forwarding org.love2d.love2d @@ %f @@ /home/deck/Documents/GitHub/Capybara-Cartridges/
-Type=Application
 Categories=Development;Game;
-Terminal=false
+Comment=The unquestionably awesome 2D game engine
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=/app/bin/love --file-forwarding org.love2d.love2d @@ %f @@ /home/deck/Documents/GitHub/Capybara-Cartridges/
 Icon=org.love2d.love2d
+MimeType=application/x-love-game;
+Name[en_US]=capybara
+Name=capybara
 NoDisplay=false
+Terminal=false
+Type=Application
 X-Desktop-File-Install-Version=0.27
 X-Flatpak=org.love2d.love2d

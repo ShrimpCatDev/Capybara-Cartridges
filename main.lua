@@ -1,7 +1,6 @@
 require 'init'
 
 function love.load()
-
     font=lg.newImageFont("assets/font.png","ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890:",1)
     lg.setFont(font)
 
@@ -28,7 +27,6 @@ function love.load()
     lives=3
 
     gs.switch(state.level)
-
 end
 
 function love.update(dt)

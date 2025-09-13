@@ -40,6 +40,11 @@ function level:init()
     --shader.crt:send("barrel", 0.3)
 
     shove.addGlobalEffect(shader.crt)
+
+    shove.addEffect("game",shader.water)
+    shove.addEffect("game",shader.wave)
+    
+    shove.addEffect("bg",shader.water)
 end
 
 function level:enter()
@@ -78,19 +83,14 @@ function level:enter()
     shove.createLayer("game")
     shove.createLayer("ui")
 
-    
-    shove.addEffect("game",shader.water)
-    shove.addEffect("game",shader.wave)
-    
-    shove.addEffect("bg",shader.water)
-
-    
-
     water={y=128}
+    time=999999
     
 end
 
 function level:update(dt)
+
+    time=time-dt
 
     --water.y=water.y-dt*5
 
