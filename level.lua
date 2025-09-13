@@ -38,13 +38,14 @@ function level:init()
     shader.water:send("freq",20)
     shader.water:send("spd",4)
     --shader.crt:send("barrel", 0.3)
+
+    shove.addGlobalEffect(shader.crt)
 end
 
 function level:enter()
 
     require("lib.lovebird").update()
     
-
     bar={x=0,y=-9,show=false,timer=0}
 
     timer.clear()
@@ -68,7 +69,9 @@ function level:enter()
 
     pl:init(16,82*4)
 
-    bg=lg.newImage("assets/bg/bg.png")
+    bgs.current=bgs[2]
+    bgs.current.init()
+
     require("lib.lovebird").update()
 
     shove.createLayer("bg")
@@ -77,11 +80,11 @@ function level:enter()
 
     
     shove.addEffect("game",shader.water)
-    --shove.addEffect("game",shader.wave)
+    shove.addEffect("game",shader.wave)
     
     shove.addEffect("bg",shader.water)
 
-    --shove.addGlobalEffect(shader.water)
+    
 
     water={y=128}
     
@@ -89,7 +92,7 @@ end
 
 function level:update(dt)
 
-    --water.y=water.y-dt*8
+    --water.y=water.y-dt*5
 
     shader.water:send("waterY",water.y)
 
@@ -128,36 +131,22 @@ function level:update(dt)
         showBar()
     end
 
+    bgs.current.update(dt)
+
 end
 
-local colors={
-    "#91c4ff",
-    "#b8e4ff",
-    "#fff4ca"
-}
-
-local flip={-1,1,-1}
-
 function level:draw()
+
+    if bgs.current.drawCanvas then bgs.current.drawCanvas() end
     --push:start()
     shove.beginDraw()
         --push:setShader(shader.wave)
         shove.beginLayer("bg")
-        setColor("#246ee5")
-        lg.rectangle("fill",0,0,config.gameWidth,config.gameHeight)
-        resetColor()
-
-        for y=0,2 do
-            for x=-1,20 do
-                setColor(colors[y+1])
-                lg.draw(bg,math.floor((x*config.gameWidth)+(-camera.x*((y+1)*0.1))+(y*29)),(32+y*10)+(math.cos((love.timer.getTime()+(y*0.5))*4)),0,flip[y+1],1)
-            end
-        end
+            bgs.current.draw()
         shove.endLayer()
-        resetColor()
 
         shove.beginLayer("game")
-        lg.push()
+            lg.push()
             local camX=math.floor(-camera.x)
             local camY=math.floor(-camera.y)
             lg.translate(camX,camY)
@@ -167,7 +156,7 @@ function level:draw()
             enemy:draw()
             pl:draw()
             part.draw()
-        lg.pop()
+            lg.pop()
         shove.endLayer()
         
         shove.beginLayer("ui")

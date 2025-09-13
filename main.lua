@@ -19,6 +19,11 @@ function love.load()
         map=require 'map'
     }
 
+    bgs={
+        require("bg/clouds"),
+        require("bg/tower")
+    }
+
     score=0
     lives=3
 
