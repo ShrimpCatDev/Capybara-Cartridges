@@ -28,7 +28,7 @@ function bg.draw()
     for y=0,2 do
         for x=-1,20 do
             setColor(colors[y+1])
-            lg.draw(bg.img,math.floor((x*config.gameWidth)+(-camera.x*((y+1)*0.1))+(y*29)),(32+y*10)+(math.cos((love.timer.getTime()+(y*0.5))*4)),0,flip[y+1],1)
+            lg.draw(bg.img,math.floor((x*config.gameWidth)+(-camera.x*((y+1)*0.1))+(y*29)),(32+y*10)+(math.cos((pTime+(y*0.5))*4)),0,flip[y+1],1)
         end
     end
     resetColor()

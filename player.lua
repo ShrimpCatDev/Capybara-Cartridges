@@ -140,7 +140,7 @@ function pl:update(dt)
     end
 
     if input:pressed("jump") and self.jump then
-        self.vy=-120
+        self.vy=-130
         self.jump=false
     end
     

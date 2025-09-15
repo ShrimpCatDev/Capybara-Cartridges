@@ -1,6 +1,7 @@
 require 'init'
 
 function love.load()
+    pTime=0
     font=lg.newImageFont("assets/font.png","ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890:",1)
     lg.setFont(font)
 

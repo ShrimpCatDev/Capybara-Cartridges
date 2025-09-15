@@ -48,13 +48,13 @@ function level:init()
 
     --add the effects
 
-    shove.addEffect("game",shader.water)
-    shove.addEffect("game",shader.wave)
     
-    shove.addEffect("bg",shader.water)
 end
 
 function level:enter()
+
+    pTime=0
+    frozen=false
 
     require("lib.lovebird").update()
     
@@ -67,7 +67,7 @@ function level:enter()
 
     world=bump.newWorld(16)
 
-    map=sti("assets/map/levelSelect.lua",{"bump"})
+    map=sti("assets/map/dev.lua",{"bump"})
     map:bump_init(world)
 
     items=require("items")
@@ -93,7 +93,7 @@ function level:enter()
         end
     end
 
-    bgs.current=bgs[2]
+    bgs.current=bgs[1]
     bgs.current.init()
 
     require("lib.lovebird").update()
@@ -104,53 +104,63 @@ function level:enter()
 
     water={y=128}
     time=999999
+
+    shove.addEffect("game",shader.water)
+
+    shove.addEffect("bg",shader.wave)
+    
+    shove.addEffect("bg",shader.water)
     
 end
 
 function level:update(dt)
 
-    time=time-dt
-
-    --water.y=water.y-dt*5
-
-    shader.water:send("waterY",water.y)
-
-    shader.wave:send("time",love.timer.getTime())
-    shader.water:send("time",love.timer.getTime())
-
-    require("lib.lovebird").update()
-    
-    bar.timer=bar.timer-dt
-    if bar.timer<=0 then
-        bar.show=false
-    end
-
-    if bar.show then
-        bar.y=lerpDt(bar.y,0,25,dt)
-    else
-        bar.y=lerpDt(bar.y,-9,25,dt)
-    end
-
     timer.update(dt)
+    require("lib.lovebird").update()
     input:update()
-    pl:update(dt)
-    map:update(dt)
-    items:update(dt)
-    enemy:update(dt)
 
-    part.update(dt)
+    if not frozen then
+
+        pTime=pTime+dt
+        time=time-dt
+
+        --water.y=water.y-dt*5
+
+        shader.water:send("waterY",water.y)
+
+        shader.wave:send("time",love.timer.getTime())
+        shader.water:send("time",love.timer.getTime())
+
+        bar.timer=bar.timer-dt
+        if bar.timer<=0 then
+            bar.show=false
+        end
+
+        if bar.show then
+            bar.y=lerpDt(bar.y,0,25,dt)
+        else
+            bar.y=lerpDt(bar.y,-9,25,dt)
+        end
+
+        pl:update(dt)
+        map:update(dt)
+        items:update(dt)
+        enemy:update(dt)
+
+        part.update(dt)
     
 
-    camera.x=(pl.x+(pl.w/2))-config.gameWidth/2
-    camera.y=(pl.y+(pl.h/2))-config.gameHeight/2
-    camera.x=clamp(camera.x,0,(map.width*map.tilewidth)-config.gameWidth)
-    camera.y=clamp(camera.y,0,(map.height*map.tileheight)-config.gameHeight)
+        camera.x=(pl.x+(pl.w/2))-config.gameWidth/2
+        camera.y=(pl.y+(pl.h/2))-config.gameHeight/2
+        camera.x=clamp(camera.x,0,(map.width*map.tilewidth)-config.gameWidth)
+        camera.y=clamp(camera.y,0,(map.height*map.tileheight)-config.gameHeight)
 
-    if input:pressed("stats") then
-        showBar()
+        if input:pressed("stats") then
+            showBar()
+        end
+
+        bgs.current.update(dt)
     end
-
-    bgs.current.update(dt)
 
 end
 
@@ -196,6 +206,16 @@ function level:draw()
         
     --push:finish()
     shove.endDraw()
+end
+
+function level:keypressed(k)
+    if k=="p" then
+        if frozen then
+            frozen=false
+        else
+            frozen=true
+        end
+    end
 end
 
 return level
