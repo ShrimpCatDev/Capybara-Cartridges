@@ -17,6 +17,10 @@ function select:enter()
     --shove.clearEffects("selectBg")
     --shove.addEffect("selectBg",shader.plasma)
 
+    for i=1,52-#self.levels do
+        table.insert(self.levels,{name="Dev",id="dev"})
+    end
+
 end
 
 function select:update()
@@ -47,7 +51,7 @@ end
 function select:draw()
     shove.beginDraw()
         shove.beginLayer("selectBg")
-            setColor("#b8e4ff")
+            setColor("#131a4e")
             lg.rectangle("fill",0,0,192,128)
             resetColor()
         shove.endLayer()
@@ -81,7 +85,7 @@ function select:draw()
 
             --lg.print(tostring((self.sel.x+1)+(self.sel.y*self.max)),0,64)
 
-            lg.cPrint(self.levels[(self.sel.x+1)+(self.sel.y*self.max)].name,config.gameWidth/2,config.gameHeight-9)
+            lg.cPrint((self.sel.x+1)+(self.sel.y*self.max).."-"..self.levels[(self.sel.x+1)+(self.sel.y*self.max)].name,config.gameWidth/2,config.gameHeight-9)
             
         shove.endLayer()
     shove.endDraw()
