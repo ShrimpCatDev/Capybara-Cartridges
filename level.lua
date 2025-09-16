@@ -42,11 +42,8 @@ function level:init()
     shader.water:send("amp",0.01)
     shader.water:send("freq",20)
     shader.water:send("spd",4)
-    --shader.crt:send("barrel", 0.3)
 
     --shove.addGlobalEffect(shader.crt)
-
-    --add the effects
 
     
 end

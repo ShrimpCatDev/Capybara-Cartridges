@@ -17,7 +17,8 @@ function love.load()
         level=require 'level',
         boot=require 'intro',
         map=require 'map',
-        select=require 'select'
+        select=require 'select',
+        pg=require 'playground'
     }
 
     bgs={
