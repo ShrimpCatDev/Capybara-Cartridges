@@ -51,7 +51,9 @@ function level:init()
     
 end
 
-function level:enter()
+function level:enter(prev,lvl)
+
+    input:update()
 
     pTime=0
     frozen=false
@@ -67,7 +69,11 @@ function level:enter()
 
     world=bump.newWorld(16)
 
-    map=sti("assets/map/dev.lua",{"bump"})
+    if lvl then
+        map=sti("assets/map/"..lvl..".lua",{"bump"})
+    else
+        map=sti("assets/map/dev.lua",{"bump"})
+    end
     map:bump_init(world)
 
     items=require("items")

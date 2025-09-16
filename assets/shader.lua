@@ -21,6 +21,8 @@ shader.test=lg.newShader([[
     }
 ]])
 
+shader.plasma=lg.newShader("assets/shaders/plasma.glsl")
+
 --[[extern float time;
 extern float amp;
 extern float freq;
