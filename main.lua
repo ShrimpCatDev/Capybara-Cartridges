@@ -16,7 +16,8 @@ function love.load()
     state={
         level=require 'level',
         boot=require 'intro',
-        map=require 'map'
+        map=require 'map',
+        select=require 'select'
     }
 
     bgs={
@@ -27,7 +28,7 @@ function love.load()
     score=0
     lives=3
 
-    gs.switch(state.level)
+    gs.switch(state.select)
 end
 
 function love.update(dt)
