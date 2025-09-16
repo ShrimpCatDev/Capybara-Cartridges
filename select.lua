@@ -5,9 +5,13 @@ function select:enter()
     input:update()
     self.sel={x=0,y=0}
     self.spacing={x=14,y=10}
-    self.offset={x=6,y=6}
-    self.max=13
+    self.offset={x=42,y=6}
+    self.max=8
     self.levels=require("levelData")
+
+    self.imgs={
+        lg.newImage("assets/select/island1.png")
+    }
 
     shove.createLayer("selectBg")
 
@@ -17,13 +21,18 @@ function select:enter()
     --shove.clearEffects("selectBg")
     --shove.addEffect("selectBg",shader.plasma)
 
-    for i=1,52-#self.levels do
+    for i=1,32-#self.levels do
         table.insert(self.levels,{name="Dev",id="dev"})
     end
 
+    self.s=0
+    self.lerp=self.s
+
 end
 
-function select:update()
+function select:update(dt)
+
+    self.lerp=lerpDt(self.lerp,self.s*config.gameWidth,8,dt)
 
     shader.plasma:send("time",love.timer.getTime())
 
@@ -45,6 +54,8 @@ function select:update()
     if input:pressed("confirm") then
         gs.switch(state.level,self.levels[(self.sel.x+1)+(self.sel.y*self.max)].id)
     end
+
+    self.s=self.sel.y
 
 end
 
@@ -87,6 +98,10 @@ function select:draw()
 
             lg.cPrint((self.sel.x+1)+(self.sel.y*self.max).."-"..self.levels[(self.sel.x+1)+(self.sel.y*self.max)].name,config.gameWidth/2,config.gameHeight-9)
             
+            for i=0,3 do
+                lg.draw(self.imgs[1],config.gameWidth/2+(i*config.gameWidth)-self.lerp,80,0,1,1,self.imgs[1]:getWidth()/2,self.imgs[1]:getHeight()/2)
+            end
+
         shove.endLayer()
     shove.endDraw()
 end
