@@ -105,15 +105,20 @@ function level:enter()
     water={y=128}
     time=999999
 
-    shove.addEffect("game",shader.water)
+    shove.clearEffects("game")
+    shove.clearEffects("bg")
 
+    shove.addEffect("game",shader.water)
     shove.addEffect("bg",shader.wave)
-    
     shove.addEffect("bg",shader.water)
+
+    mul=1
     
 end
 
-function level:update(dt)
+function level:update(dt2)
+
+    dt=dt2*mul
 
     timer.update(dt)
     require("lib.lovebird").update()
@@ -128,8 +133,8 @@ function level:update(dt)
 
         shader.water:send("waterY",water.y)
 
-        shader.wave:send("time",love.timer.getTime())
-        shader.water:send("time",love.timer.getTime())
+        shader.wave:send("time",pTime)
+        shader.water:send("time",pTime)
 
         bar.timer=bar.timer-dt
         if bar.timer<=0 then
@@ -202,10 +207,14 @@ function level:draw()
                 lg.rectangle("fill",i*(hpW+1)+1,1,hpW,hpH)
             end
         lg.pop()
+        lg.setColor(1,1,1,1)
+    lg.print(tostring(mul),1,1)
         shove.endLayer()
         
     --push:finish()
+    
     shove.endDraw()
+    
 end
 
 function level:keypressed(k)
@@ -215,6 +224,12 @@ function level:keypressed(k)
         else
             frozen=true
         end
+    end
+    if k=="w" then
+        mul=mul+.5
+    end
+    if k=="s" then
+        mul=mul-.5
     end
 end
 
