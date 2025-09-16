@@ -47,9 +47,9 @@ end
 function select:draw()
     shove.beginDraw()
         shove.beginLayer("selectBg")
-            --setColor("#b8e4ff")
-            --lg.rectangle("fill",0,0,192,128)
-            --resetColor()
+            setColor("#b8e4ff")
+            lg.rectangle("fill",0,0,192,128)
+            resetColor()
         shove.endLayer()
 
         shove.beginLayer("select")
