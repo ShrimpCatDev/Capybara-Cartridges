@@ -5,6 +5,8 @@ function love.load()
     font=lg.newImageFont("assets/font.png","ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890:.!?-",1)
     lg.setFont(font)
 
+    ripple=require 'lib/ripple'
+
     gs=require'lib.hump.gamestate'
     Camera=require 'lib.hump.camera'
     timer=require 'lib.hump.timer'

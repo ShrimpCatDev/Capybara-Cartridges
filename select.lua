@@ -1,5 +1,8 @@
 local select={}
 
+local music=love.audio.newSource("assets/music/levelSelect.mp3","stream")
+local sound=ripple.newSound(music,{loop=true})
+
 function select:enter()
     shader=require("assets/shader")
     input:update()
@@ -27,6 +30,8 @@ function select:enter()
 
     self.s=0
     self.lerp=self.s
+
+    sound:play()
 
 end
 
@@ -108,6 +113,7 @@ end
 
 function select:leave()
     shove.removeLayer("select")
+    sound:stop()
 end
 
 return select
