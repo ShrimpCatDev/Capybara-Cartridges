@@ -91,10 +91,18 @@ function level:enter(prev,lvl)
                 pl.x,pl.y=x*8,y*8
                 map:setLayerTile("enemy",x+1,y+1,0)
             end
-            
-            
         end
     end
+
+    --px,py=0,0
+
+    local pData=map.layers["data"]
+    for k,v in ipairs(pData.objects) do
+        if v.properties["portal"] then
+            px,py=v.x,v.y
+        end
+    end
+    map:removeLayer("data")
 
     bgs.current=bgs[1]
     bgs.current.init()
@@ -112,16 +120,20 @@ function level:enter(prev,lvl)
     shove.clearEffects("bg")
 
     shove.addEffect("game",shader.water)
-    shove.addEffect("bg",shader.wave)
+    --shove.addEffect("bg",shader.wave)
     shove.addEffect("bg",shader.water)
 
-    mul=1
+    mul={t=1}
     
 end
 
 function level:update(dt2)
 
-    dt=dt2*mul
+    if pointCol(px,py,pl.x,pl.y,pl.w,pl.h) then
+        gs.switch(state.select)
+    end
+
+    dt=dt2*mul.t
 
     timer.update(dt)
     require("lib.lovebird").update()
@@ -172,6 +184,8 @@ function level:update(dt2)
 
 end
 
+local rd=6.283185
+
 function level:draw()
 
     if bgs.current.drawCanvas then bgs.current.drawCanvas() end
@@ -187,12 +201,35 @@ function level:draw()
             local camX=math.floor(-camera.x)
             local camY=math.floor(-camera.y)
             lg.translate(camX,camY)
+
+            setColor("#246ee5")
+            lg.circle("fill",px,py,14+math.cos(pTime*3)*2)
+
+            setColor("#91c4ff")
+            local m=8
+            for i=0,m-1 do
+                lg.circle("fill",px-math.sin(pTime+i*(rd/m))*10,py-math.cos(pTime+i*(rd/m))*10,4)
+            end
+
+            setColor("#fff4ca")
+            lg.circle("fill",px,py,8)
+
+            setColor("#b8e4ff")
+            local m=8
+            for i=0,m-1 do
+                lg.circle("fill",px-math.cos(pTime+i*(rd/m))*8,py-math.sin(pTime+i*(rd/m))*8,3)
+            end
+
+            resetColor()
+
             map:draw(camX,camY)
+
             --boxes:draw()
             items:draw()
             enemy:draw()
             pl:draw()
             part.draw()
+
             lg.pop()
         shove.endLayer()
         
@@ -211,7 +248,7 @@ function level:draw()
             end
         lg.pop()
         lg.setColor(1,1,1,1)
-    lg.print(tostring(mul),1,1)
+    --lg.print(tostring(mul),1,1)
         shove.endLayer()
         
     --push:finish()

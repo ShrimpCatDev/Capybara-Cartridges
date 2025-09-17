@@ -29,7 +29,7 @@ function love.load()
     score=0
     lives=3
 
-    gs.switch(state.select)
+    gs.switch(state.level)
 end
 
 function love.update(dt)

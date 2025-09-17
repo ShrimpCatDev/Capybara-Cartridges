@@ -54,4 +54,8 @@ function rect(f,x,y,w,h)
     end
 end
 
+function pointCol(pX, pY, bx, by, bw, bh)
+    return pX >= bx and pX < bx + bw and pY >= by and pY < by + bh
+end
+
 lg.rectangle=rect

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="8" tileheight="8" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="2">
  <editorsettings>
   <export target="dev.lua" format="lua"/>
  </editorsettings>
+ <properties>
+  <property name="portal" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="tileset" tilewidth="8" tileheight="8" tilecount="1024" columns="32">
   <image source="tileset.png" width="256" height="256"/>
   <tile id="0">
@@ -264,4 +267,15 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="4" name="data">
+  <properties>
+   <property name="portal" type="bool" value="true"/>
+  </properties>
+  <object id="1" x="354.5" y="308">
+   <properties>
+    <property name="portal" type="bool" value="true"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
 </map>
