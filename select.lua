@@ -24,7 +24,7 @@ function select:enter()
     --shove.clearEffects("selectBg")
     --shove.addEffect("selectBg",shader.plasma)
 
-    for i=1,32-#self.levels do
+    for i=1,8-#self.levels do
         table.insert(self.levels,{name="Dev",id="dev"})
     end
 
@@ -62,6 +62,18 @@ function select:update(dt)
 
     self.s=self.sel.y
 
+    self.sel.x=self.sel.x%self.max
+
+    if self.sel.x<0 then
+        self.sel.x=self.max-1
+    end
+
+    self.sel.y=self.sel.y % (#self.levels/self.max)
+
+    if self.sel.y<0 then
+        self.sel.x=(#self.levels/self.max)-1
+    end
+
 end
 
 function select:draw()
@@ -80,13 +92,13 @@ function select:draw()
                 local y=math.floor(math.floor(i/self.max)*self.spacing.y+self.offset.y+math.cos(love.timer.getTime()*6+(i%self.max)*0.7)*1.5)
 
                 if self.sel.x==i%self.max and self.sel.y==math.floor(i/self.max) then
-                    if i%2==0 then
+                    if math.floor(i/self.max)%2==0 then
                         setColor("#f5a87d")
                     else
                         setColor("#91c4ff")
                     end
                 else
-                    if i%2==0 then
+                    if math.floor(i/self.max)%2==0 then
                         setColor("#eb5d3d")
                     else
                         setColor("#246ee5")
