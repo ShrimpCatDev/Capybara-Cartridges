@@ -265,12 +265,6 @@ function level:keypressed(k)
             frozen=true
         end
     end
-    if k=="w" then
-        mul=mul+.5
-    end
-    if k=="s" then
-        mul=mul-.5
-    end
 end
 
 return level
